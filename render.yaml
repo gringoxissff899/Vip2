@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gringozin-vip
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: ACCESS_KEY
+        sync: false
+      - key: FLASK_SECRET
+        generateValue: true

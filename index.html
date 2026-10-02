@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRINGOZIN · PAINEL VIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #07070d;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(15, 15, 26, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-radius: 24px;
+            padding: 32px 28px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(139, 92, 246, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .header h1 span {
+            color: #a78bfa;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 6px 16px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: #4ade80;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+        }
+        
+        /* LOGIN FORM */
+        .login-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .input-group label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 12px rgba(167, 139, 250, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1px;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        .btn-login:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+        .error-msg {
+            color: #ef4444;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        /* PAINEL */
+        .ip-info {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .feature-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 16px 20px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(167, 139, 250, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .feature-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .feature-info p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .3s;
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-color: #a78bfa;
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+        }
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 1px;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- TELA DE LOGIN -->
+        <div id="login-screen">
+            <div class="header">
+                <h1>GRINGOZIN <span>VIP</span></h1>
+                <div class="status-badge">
+                    <div class="dot"></div>
+                    <span>SISTEMA PRONTO</span>
+                </div>
+            </div>
+
+            <div class="login-box">
+                <div class="input-group">
+                    <label>CHAVE DE ACESSO VIP</label>
+                    <input type="password" id="access-key" class="input-field" placeholder="Digite sua licença...">
+                </div>
+                <div id="error-msg" class="error-msg">Chave incorreta ou inválida!</div>
+                <button class="btn-login" onclick="login()">ACESSAR PAINEL</button>
+            </div>
+        </div>
+
+        <!-- TELA DO PAINEL -->
+        <div id="panel-screen" class="hidden">
+            <div class="header">
+                <h1>GRINGOZIN <span>VIP</span></h1>
+                <div class="status-badge">
+                    <div class="dot"></div>
+                    <span>SERVIDOR CONECTADO</span>
+                </div>
+            </div>
+
+            <div class="ip-info">IP CONECTADO: <span id="user-ip">...</span></div>
+
+            <div class="feature-list">
+                <!-- BYPASS -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>BYPASS V1</h3>
+                        <p>Proteção Antiban &amp; Injetor</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="bypass_v1" onchange="toggleFeature('bypass_v1', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- HS PESCOÇO -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>HS PESCOÇO</h3>
+                        <p>Subida de capa suave</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="hs_neck" onchange="toggleFeature('hs_neck', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- HS PEITO -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>HS PEITO</h3>
+                        <p>Mira gruda na cabeça</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="hs_chest" onchange="toggleFeature('hs_chest', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- BACKJUMP -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>BACKJUMP V1</h3>
+                        <p>Pulo rápido e sem desaceleração</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="backjump_v1" onchange="toggleFeature('backjump_v1', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- HIGH SENSI -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>SENSI ALTA</h3>
+                        <p>Sensibilidade multiplicada (9x)</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="high_sensi" onchange="toggleFeature('high_sensi', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- ZIG ZAG MOVE -->
+                <div class="feature-card">
+                    <div class="feature-info">
+                        <h3>ZIG ZAG MOVE</h3>
+                        <p>Movimentação rápida e fluida</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="zig_zag_move" onchange="toggleFeature('zig_zag_move', this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">GRINGOZIN SERVER · DIRECT CONNECT</div>
+    </div>
+
+    <script>
+        async function login() {
+            const key = document.getElementById('access-key').value.trim();
+            const error = document.getElementById('error-msg');
+            error.style.display = "none";
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Falha no login');
+                showPanel();
+            } catch (e) {
+                error.innerText = e.message || 'Não foi possível conectar ao servidor.';
+                error.style.display = "block";
+            }
+        }
+
+        function showPanel() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('panel-screen').classList.remove('hidden');
+            loadStatus();
+        }
+
+        async function loadStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Falha ao carregar o painel');
+                document.getElementById('user-ip').innerText = data.ip || 'indisponível';
+                const cfg = data.config || {};
+                document.getElementById('bypass_v1').checked = !!cfg.BYPASSV1;
+                document.getElementById('hs_neck').checked = !!cfg.HS_NECK;
+                document.getElementById('hs_chest').checked = !!cfg.HS_CHEST;
+                document.getElementById('backjump_v1').checked = !!cfg.BACKJUMPV1;
+                document.getElementById('high_sensi').checked = !!cfg.HIGH_SENSI;
+                document.getElementById('zig_zag_move').checked = !!cfg.ZIG_ZAG_MOVE;
+            } catch (e) {
+                console.error("Erro ao carregar dados:", e);
+                document.getElementById('user-ip').innerText = 'servidor indisponível';
+            }
+        }
+
+        async function toggleFeature(feature, element) {
+            const value = element.checked;
+            try {
+                const res = await fetch('/api/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ feature, value })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Falha ao atualizar');
+            } catch (e) {
+                console.error("Erro ao atualizar função:", e);
+                element.checked = !value;
+                alert(e.message || 'Não foi possível atualizar a função.');
+            }
+        }
+
+        document.getElementById('access-key').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') login();
+        });
+    </script>
+
+</body></html>
